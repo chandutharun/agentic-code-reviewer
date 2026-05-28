@@ -469,19 +469,6 @@ self.workflow.add_edge("previous_agent", "new_agent")
 self.workflow.add_edge("new_agent", "next_agent")
 ```
 
----
-
-## 🚧 Planned Features (Roadmap)
-
-- [ ] **Performance Agent**: Detect slow algorithms (O(n²) → O(n))
-- [ ] **CI/CD Integration**: GitHub Actions plugin
-- [ ] **IDE Plugin**: VS Code extension
-- [ ] **Team Dashboard**: Track team-wide code quality trends
-- [ ] **Custom Rules**: Allow teams to define custom security rules
-- [ ] **More Languages**: Rust, C++, Ruby support
-- [ ] **Batch Processing**: Review entire codebases at once
-
----
 
 ## ❓ FAQ
 
@@ -568,6 +555,6 @@ AI Developer / Red Teamer
 
 If you found this project helpful, please **give it a star!** ⭐
 
-https://github.com/chandutharun/agentic-code-reviewer)
+(https://github.com/chandutharun/agentic-code-reviewer)
 
 ---
