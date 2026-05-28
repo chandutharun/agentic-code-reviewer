@@ -318,23 +318,56 @@ score = max(0, min(100, score))
 ---
 
 ## 🏗️ Project Structure
-# 🤖 Agentic Code Reviewer
 
-AI-powered code reviewer with agentic workflow for automated code review using **5 AI agents** and **LangGraph**.
-
-## 🚀 Features
-
-- **5 Specialized AI Agents** for comprehensive code review
-- **Multi-language Support** (Python, Java, C++, JavaScript, etc.)
-- **Auto-Fix Generation** with detailed explanations
-- **PDF & HTML Reports** with metrics and benchmarks
-- **Security Analysis** for vulnerabilities and best practices
-- **Style Checking** for code quality and consistency
-- **Compilation Validation** before deployment
-- **LangSmith Tracing** for agent monitoring
-- **Web UI** with Streamlit
-
-
+agentic-code-reviewer/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── .dockerignore
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── cli.py
+├── Complete Guide_ Agentic Code Reviewer.docx
+│
+├── UI/
+│ └── app.py
+│
+├── src/
+│ ├── agents/
+│ │ ├── security_agent.py
+│ │ ├── style_agent.py
+│ │ ├── fix_agent.py
+│ │ └── compiler_agent.py
+│ │
+│ ├── workflows/
+│ │ └── review_workflow.py
+│ │
+│ ├── tools/
+│ │ ├── code_scanner.py
+│ │ └── sandbox.py
+│ │
+│ └── utils/
+│ ├── report_exporter.py
+│ ├── evaluations.py
+│ └── langsmith_tracing.py
+│
+├── tests/
+│ └── vulnerable_example.py
+│
+├── reports/
+│ ├── *.pdf (generated reports)
+│ └── *.html (generated reports)
+│
+├── images/
+│ ├── demo1.png
+│ ├── home.png
+│ └── report_pasted_code.*
+│
+└── .github/
+├── PULL_REQUEST_TEMPLATE.md
+└── workflows/
+└── code-review.yml
 
 **Key Integration Note:** The `ReportExporter` class from `report_exporter.py` is **integrated directly into `review_workflow.py`**. The workflow calls `export_to_pdf()` and `export_to_html()` methods internally, so reports are generated automatically when the workflow completes.
 
