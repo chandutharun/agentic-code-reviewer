@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Code Review Report - QA Score: 30/100</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e3d59;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+        }
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .metric {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .finding {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .finding-critical { border-left-color: #dc3545; background: #f8d7da; }
+        .finding-high { border-left-color: #ffc107; background: #fff3cd; }
+        .finding-medium { border-left-color: #17a2b8; background: #d1ecf1; }
+        .finding-low { border-left-color: #28a745; background: #d4edda; }
+        .code-block {
+            background: #262730;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .summary {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Code Review Report</h1>
+        
+        <div class="summary">
+            <h2>📊 Quality Score</h2>
+            <div class="score">30/100</div>
+            <p><strong>Risk Level:</strong> 🔴 Critical</p>
+            <p><strong>File:</strong> pasted_code.py</p>
+            <p><strong>Model:</strong> qwen2.5-coder:32b</p>
+            <p><strong>Processing Time:</strong> 483.64 seconds</p>
+        </div>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">3</div>
+                <div class="metric-label">🔒 Security Issues</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">6</div>
+                <div class="metric-label">🎨 Style Issues</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">9</div>
+                <div class="metric-label">🔧 Fixes Applied</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">✅</div>
+                <div class="metric-label">Compilation</div>
+            </div>
+        </div>
+
+        <h2>🔒 Security Findings</h2>
+
+        <div class="finding finding-critical">
+            <h3>Finding #1 - Critical</h3>
+            <p><strong>Issue:</strong> SQL Injection - User input directly concatenated into SQL query</p>
+<p><strong>Location:</strong> Line 5-6</p><p><strong>Risk:</strong> Attacker can inject malicious SQL to access/modify/delete database data.</p>
+            <p><strong>Suggested Fix:</strong></p>
+            <div class="code-block">Use parameterized queries: 
+cursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))</div>
+
+        <div class="finding finding-critical">
+            <h3>Finding #2 - Critical</h3>
+            <p><strong>Issue:</strong> eval() usage - Code execution vulnerability</p>
+<p><strong>Location:</strong> Line 10</p><p><strong>Risk:</strong> Attacker can execute arbitrary code leading to potential full system compromise.</p>
+            <p><strong>Suggested Fix:</strong></p>
+            <div class="code-block">Avoid using eval() and instead use safer alternatives like ast.literal_eval for literals or define a safe evaluation environment.</div>
+
+        <div class="finding finding-high">
+            <h3>Finding #3 - High</h3>
+            <p><strong>Issue:</strong> Path Traversal - Insecure file path construction</p>
+<p><strong>Location:</strong> Line 14-15</p><p><strong>Risk:</strong> Attacker can manipulate the filename to access arbitrary files on the server.</p>
+            <p><strong>Suggested Fix:</strong></p>
+            <div class="code-block">Use a safe directory traversal method and validate filenames: 
+import os
+if '..' in filename or os.path.isabs(filename):
+    raise ValueError('Invalid filename')
+with open(os.path.join('/home/data/', filename), 'r') as f:
+    return f.read()</div>
+
+        <hr>
+
+        <h2>🎨 Style Findings</h2>
+
+        <div class="finding">
+            <p><strong>Finding #1:</strong> SQL injection vulnerability due to direct string concatenation in SQL query</p>
+<p><strong>Suggestion:</strong> Use parameterized queries to prevent SQL injection: `query = 'SELECT * FROM users WHERE id = ?'; cursor.execute(query, (user_id,))`</p>
+        <div class="finding">
+            <p><strong>Finding #2:</strong> Using eval() which can execute arbitrary code and poses a security risk</p>
+<p><strong>Suggestion:</strong> Avoid using eval(). Consider safer alternatives such as ast.literal_eval() if you need to evaluate strings containing Python literals.</p>
+        <div class="finding">
+            <p><strong>Finding #3:</strong> Potential path traversal vulnerability due to direct concatenation of user input with file paths</p>
+<p><strong>Suggestion:</strong> Sanitize the filename or use a whitelist approach to prevent path traversal: `import os; safe_path = os.path.join('/home/data/', os.path.basename(filename))`</p>
+        <div class="finding">
+            <p><strong>Finding #4:</strong> Function 'get_user' lacks a docstring</p>
+<p><strong>Suggestion:</strong> Add a docstring to describe the function's purpose and parameters: """Retrieve user data by ID."""</p>
+        <div class="finding">
+            <p><strong>Finding #5:</strong> Function 'execute_code' lacks a docstring</p>
+<p><strong>Suggestion:</strong> Add a docstring to describe the function's purpose and parameters: """Execute given code string."""</p>
+        <div class="finding">
+            <p><strong>Finding #6:</strong> Function 'read_file' lacks a docstring</p>
+<p><strong>Suggestion:</strong> Add a docstring to describe the function's purpose and parameters: """Read file content by filename."""</p>
+        <hr>
+
+        <h2>🛠️ Auto-Fixed Code</h2>
+        <div class="summary">
+            <p>✅ <strong>9 fix(es) automatically applied!</strong></p>
+        </div>
+        
+        <h3>📄 Original Code</h3>
+        <div class="code-block">import sqlite3
+
+def get_user(user_id):
+    # VULNERABLE: SQL injection
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE id = " + user_id
+    cursor.execute(query)
+    return cursor.fetchone()
+
+def execute_code(code_string):
+    # VULNERABLE: dangerous eval()
+    result = eval(code_string)
+    return result
+
+def read_file(filename):
+    # VULNERABLE: path traversal
+    with open('/home/data/' + filename, 'r') as f:
+        return f.read()</div>
+        
+        <h3>✅ Fixed Code</h3>
+        <div class="code-block">import sqlite3
+import os
+from ast import literal_eval
+
+def get_user(user_id):
+    """Retrieve a user from the database by their ID."""
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE id = ?"
+    cursor.execute(query, (user_id,))
+    return cursor.fetchone()
+
+def execute_code(code_string):
+    """Safely evaluate a code string using literal_eval."""
+    try:
+        result = literal_eval(code_string)
+        return result
+    except (ValueError, SyntaxError):
+        raise ValueError("Invalid code string provided.")
+
+def read_file(filename):
+    """Read a file securely by validating the filename."""
+    base_path = '/home/data/'
+    safe_path = os.path.join(base_path, filename)
+    
+    # Ensure the resolved path is within the base directory
+    if not os.path.commonpath([base_path, safe_path]) == base_path:
+        raise ValueError("Invalid file path provided.")
+    
+    with open(safe_path, 'r') as f:
+        return f.read()</div>
+
+    </div>
+</body>
+</html>
