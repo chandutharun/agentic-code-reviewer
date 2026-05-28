@@ -19,30 +19,38 @@
 | **100% Local** | Privacy-preserving, no cloud code upload |
 | **Multi-Language** | Python, JavaScript, TypeScript, Java, Go |
 
----
-
 ## 🏗️ Architecture
-┌─────────────────────────────────────────────────────────────┐
-│ Agentic Code Reviewer │
-├─────────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ │
-│ │Input Layer │───▶│ 5-Agent │───▶│ Output Layer │ │
-│ │ │ │ Workflow │ │ │ │
-│ │ - Paste Code │ │ │ │ - PDF Report │ │
-│ │ - Upload File│ │ 5 Agents │ │ - HTML Report│ │
-│ │ - Upload Zip │ │ │ │ - Fixed Code │ │
-│ └──────────────┘ └──────────────┘ └──────────────┘ │
-│ │ │
-│ ▼ │
-│ ┌──────────────────┐ │
-│ │ LangGraph │ │
-│ │ State Machine │ │
-│ └──────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
 
-text
-
+```mermaid
+flowchart TD
+    subgraph Agentic Code Reviewer
+        direction TB
+        
+        subgraph Input["📥 Input Layer"]
+            A1["-  Paste Code"]
+            A2["-  Upload File"]
+            A3["-  Upload Zip"]
+        end
+        
+        subgraph Workflow["🔄 5-Agent Workflow"]
+            B["5 Agents<br/>LangGraph State Machine"]
+        end
+        
+        subgraph Output["📤 Output Layer"]
+            C1["-  PDF Report"]
+            C2["-  HTML Report"]
+            C3["-  Fixed Code"]
+        end
+        
+        Input --> Workflow
+        Workflow --> Output
+    end
+    
+    style Agentic Code Reviewer fill:#f9f9f9,stroke:#333,stroke-width:4px
+    style Input fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style Workflow fill:#fff4e1,stroke:#ff9900,stroke-width:2px
+    style Output fill:#e1ffe1,stroke:#00cc66,stroke-width:2px
+```
 ### 5 Specialized Agents (Integrated in `review_workflow.py`)
 
 | Agent | Role | What It Does |
@@ -140,7 +148,6 @@ llama3 (balanced)
 
 mistral (fast, lower accuracy)
 
-text
 
 ---
 
@@ -196,7 +203,6 @@ Choose one method:
 ### Step 4: Select Model
 Dropdown: qwen:30b (recommended, highest accuracy), llama3.2, llama3, mistral
 
-text
 
 **For best results:** Select `qwen:30b`
 
@@ -212,21 +218,19 @@ Click **"🔍 Run 5-Agent Code Review"**
 📋 [Agent 5/5] Reporter Agent creating report...
 ✅ Analysis complete! (15.67 seconds)
 
-text
 
 ### Step 6: View Results
-┌─────────────────────────────────────┐
-│ Quality Score: 95/100 │
-│ Risk Level: 🟢 Low │
-├─────────────────────────────────────┤
-│ 🔒 Security Issues: 1 │
-│ 🎨 Style Issues: 6 │
-│ 🔧 Fixes Applied: 7 │
-│ ✅ Compilation: Successful │
-│ 📊 Processing Time: 15.67 seconds │
-└─────────────────────────────────────┘
+────────────────────────────────────
+ Quality Score: 95/100 
+ Risk Level: 🟢 Low 
+───────────────────────────────────
+ 🔒 Security Issues: 1 
+ 🎨 Style Issues: 6 
+ 🔧 Fixes Applied: 7 
+ ✅ Compilation: Successful 
+ 📊 Processing Time: 15.67 seconds 
 
-text
+
 
 ### Step 7: Export Reports
 
@@ -315,38 +319,44 @@ score = max(0, min(100, score))
 
 ## 🏗️ Project Structure
 agentic-code-reviewer/
-├── Dockerfile # Docker container configuration
-├── docker-compose.yml # Docker Compose (app + Ollama)
-├── .dockerignore # Docker ignore file
-├── .env.example # Environment variables template
-├── .gitignore
-├── requirements.txt # Python dependencies
-├── README.md
-├── UI/
-│ └── app.py # Streamlit web interface
-├── src/
-│ ├── agents/ # 5 AI Agents
-│ │ ├── _init_.py
-│ │ ├── security_agent.py # 🔒 Security analysis
-│ │ ├── style_agent.py # 🎨 Style checking
-│ │ ├── fix_agent.py # 🔧 Auto-fix generation
-│ │ └── compiler_agent.py # 🔍 Compilation validation
-│ ├── workflows/
-│ │ └── review_workflow.py # 🔄 LangGraph workflow + ReportExporter integrated
-│ ├── tools/
-│ │ ├── _init_.py
-│ │ ├── compiler.py # Multi-language compiler
-│ │ └── sandbox.py # Safe code execution sandbox
-│ ├── utils/
-│ │ ├── report_exporter.py # 📄 PDF/HTML generation (integrated in workflow)
-│ │ ├── evaluations.py # Metrics & benchmarking
-│ │ └── langsmith_tracing.py # AgentOps tracing (LangSmith)
-│ └── _init_.py
-└── reports/ # Generated reports
-├── pdf/
-└── html/
+├── 📄 Dockerfile                  # Docker container configuration
+├── 📄 docker-compose.yml          # Docker Compose (app + Ollama)
+├── 📄 .dockerignore               # Docker ignore file
+├── 📄 .env.example                # Environment variables template
+├── 📄 .gitignore
+├── 📄 requirements.txt            # Python dependencies
+├── 📄 README.md
+│
+├── 📁 UI/
+│   └── app.py                     # 🖥️ Streamlit web interface
+│
+├── 📁 src/
+│   ├── 📁 agents/                 # 🤖 5 AI Agents
+│   │   ├── __init__.py
+│   │   ├── security_agent.py      # 🔒 Security analysis
+│   │   ├── style_agent.py         # 🎨 Style checking
+│   │   ├── fix_agent.py           # 🔧 Auto-fix generation
+│   │   └── compiler_agent.py      # 🔍 Compilation validation
+│   │
+│   ├── 📁 workflows/
+│   │   └── review_workflow.py     # 🔄 LangGraph workflow + ReportExporter
+│   │
+│   ├── 📁 tools/
+│   │   ├── __init__.py
+│   │   ├── compiler.py            # 🔧 Multi-language compiler
+│   │   └── sandbox.py             # 🛡️ Safe code execution sandbox
+│   │
+│   ├── 📁 utils/
+│   │   ├── report_exporter.py     # 📄 PDF/HTML generation
+│   │   ├── evaluations.py         # 📊 Metrics & benchmarking
+│   │   └── langsmith_tracing.py   # 🔗 LangSmith tracing
+│   │
+│   └── __init__.py
+│
+└── 📁 reports/                    # 📊 Generated reports
+    ├── 📁 pdf/
+    └── 📁 html/
 
-text
 
 **Key Integration Note:** The `ReportExporter` class from `report_exporter.py` is **integrated directly into `review_workflow.py`**. The workflow calls `export_to_pdf()` and `export_to_html()` methods internally, so reports are generated automatically when the workflow completes.
 
