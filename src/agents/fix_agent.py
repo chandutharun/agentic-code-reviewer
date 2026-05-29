@@ -12,7 +12,8 @@ class FixAgent:
     """Generates fixed code for all security and style findings."""
     
     def __init__(self, model: str = "llama3.2"):
-        self.llm = ChatOllama(model=model, temperature=0.3)
+        # self.llm = ChatOllama(model=model, temperature=0.3)
+        self.llm = ChatOllama(model=model, temperature=0.3, base_url="http://localhost:11434")
     
     def generate_fix_prompt(self, code: str, findings: List[Dict], filename: str) -> str:
         """Generate prompt for fix agent."""
